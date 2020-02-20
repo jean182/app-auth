@@ -1,4 +1,13 @@
 Rails.application.routes.draw do
-  devise_for :users
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+  devise_for :users,
+  path:       '',
+  controllers: { omniauth_callbacks: 'users/omniauth_callbacks' },
+  path_names: {
+    sign_in:      'login',
+    sign_out:     'logout',
+    password:     'secret',
+    confirmation: 'verification',
+    unlock:       'unblock',
+  }
+  root to: 'home#index'
 end
