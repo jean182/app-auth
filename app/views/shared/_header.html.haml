@@ -3,6 +3,8 @@
   %button.navbar-toggler.p-0.border-0{"aria-controls" => "navbarMobile", "aria-expanded" => "false", "aria-label" => "Toggle navigation", "data-target" => "#navbarMobile", "data-toggle" => "collapse", type: "button"}
     %span.navbar-toggler-icon
   #navbarMobile.collapse.navbar-collapse
+    %ul.navbar-nav.mr-auto.d-flex.align-items-center
+      = render 'shared/header_links'
     %ul.navbar-nav.ml-auto.d-flex.align-items-center
       - if user_signed_in?
         %li.nav-item.dropdown
