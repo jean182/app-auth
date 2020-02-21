@@ -10,4 +10,8 @@ Rails.application.routes.draw do
     unlock:       'unblock',
   }
   root to: 'home#index'
+
+  resources :about, only: :index
+  resources :audit, only: :index
+  resources :profile, only: :index
 end

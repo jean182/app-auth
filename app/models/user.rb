@@ -1,13 +1,13 @@
 class User < ApplicationRecord
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
+  enum role: %i[user auditor inventory human_resource]
+  after_initialize :set_default_role, :set_default_description, :set_default_image, if: :new_record?
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable, :omniauthable, omniauth_providers: %i[facebook]
 
   def self.new_with_session(params, session)
     super.tap do |user|
-      if data = session["devise.facebook_data"] && session["devise.facebook_data"]["extra"]["raw_info"]
-        user.email = data["email"] if user.email.blank?
+      if data = session['devise.facebook_data'] && session['devise.facebook_data']['extra']['raw_info']
+        user.email = data['email'] if user.email.blank?
       end
     end
   end
@@ -18,6 +18,19 @@ class User < ApplicationRecord
       user.password = Devise.friendly_token[0, 20]
       user.name = auth.info.name
       user.image = auth.info.image
+      user.role = :user
     end
+  end
+
+  def set_default_role
+    self.role ||= :user
+  end
+
+  def set_default_description
+    self.description ||= 'Please add a description of yourself'
+  end
+
+  def set_default_image
+    self.image ||= 'https://i1.wp.com/acaweb.org/wp-content/uploads/2018/12/profile-placeholder.png'
   end
 end
