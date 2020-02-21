@@ -1,5 +1,5 @@
 class User < ApplicationRecord
-  enum role: %i[user auditor inventory human_resource]
+  enum role: %i[user auditor inventory human_resources]
   after_initialize :set_default_role, :set_default_description, :set_default_image, if: :new_record?
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable, :omniauthable, omniauth_providers: %i[facebook google_oauth2]
@@ -19,6 +19,17 @@ class User < ApplicationRecord
       user.name = auth.info.name
       user.image = auth.info.image
       user.role = :user
+    end
+  end
+
+  def beautify_provider
+    case provider
+    when 'facebook'
+      'Facebook'
+    when 'google_oauth2'
+      'Google'
+    else
+      'Email'
     end
   end
 

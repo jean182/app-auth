@@ -1,4 +1,4 @@
-.row.justify-content-center.align-items-center.mt-2
+.row.justify-content-sm-center.align-items-sm-center.mt-2
   .col-sm-6
     .card
       .card-body
@@ -12,5 +12,60 @@
                 = current_user.role.humanize
             %p
               = current_user.description
+            %p
+              %span.badge.badge-primary.tags
+                = current_user.role.humanize
+              %span.badge.badge-info.tags
+                = current_user.beautify_provider
           .col-12.col-lg-4.col-md-6.text-center
-            %img.mx-auto.rounded-circle.img-fluid{alt: "", src: current_user.image, height: "50", width: "50"}/
+            %img.mx-auto.rounded-circle.img-fluid{alt: "", src: current_user.image, height: "50", width: "50" }/
+            %br/
+            %ul.list-inline.ratings.text-center{title: "Ratings"}
+              %li.list-inline-item
+                %a{href: "#"}
+                  %span.fa.fa-star
+              %li.list-inline-item
+                %a{href: "#"}
+                  %span.fa.fa-star
+              %li.list-inline-item
+                %a{href: "#"}
+                  %span.fa.fa-star
+              %li.list-inline-item
+                %a{href: "#"}
+                  %span.fa.fa-star
+              %li.list-inline-item
+                %a{href: "#"}
+                  %span.fa.fa-star
+          .col-12.col-lg-4
+            - if current_user.auditor?
+              = link_to(audit_index_path , html_options = { class: "btn btn-outline-success btn-block" }) do
+                %span.fa.fa-user
+                Audit
+            - elsif current_user.user?
+              = link_to(root_path , html_options = { class: "btn btn-outline-success btn-block" }) do
+                %span.fa.fa-user
+                Home
+            - elsif current_user.inventory?
+              = link_to(inventory_index_path , html_options = { class: "btn btn-outline-success btn-block" }) do
+                %span.fa.fa-user
+                Inventory
+            - elsif current_user.human_resources?
+              = link_to(hr_index_path , html_options = { class: "btn btn-outline-success btn-block" }) do
+                %span.fa.fa-user
+                HR
+          .col-12.col-lg-4
+            = link_to(edit_user_registration_path , html_options = { class: "btn btn-outline-info btn-block" }) do
+              %span.fa.fa-user
+              Edit Profile
+          .col-12.col-lg-4
+            = link_to(destroy_user_session_path, html_options = { class: "btn btn-outline-danger btn-block", method: :delete }) do
+              %span.fa.fa-user
+              Log Out
+
+- if current_user.auditor?
+  .d-flex.justify-content-sm-center.align-items-sm-center.mt-2
+    %h1.display-4 Additional Links
+  .d-flex.justify-content-sm-center.align-items-sm-center.mt-2
+    = link_to 'Inventory', inventory_index_path
+  .d-flex.justify-content-sm-center.align-items-sm-center.mt-2
+    = link_to 'Human Resources', hr_index_path

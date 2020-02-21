@@ -3,13 +3,9 @@
 - if current_user.present? && current_user.auditor?
   %li.nav-item
     = link_to 'Audit' , audit_index_path, class: "#{current_page?(audit_index_path) ? "active" : ""} nav-link"
--# - elsif current_user.present? && current_user.mentor?
--#   %li.nav-item.dropdown
--#     = link_to 'Dashboard' , mentor_root_path, class: "nav-link"
--#   %li.nav-item
--#     = link_to 'Time Tracker', mentor_time_trackings_path, class: "nav-link"
--# - elsif current_user.present? && current_user.client?
--#   %li.nav-item.dropdown
--#     = link_to 'Dashboard' , member_root_path, class: "nav-link"
--#   %li.nav-item
--#     = link_to 'Invite Members' , new_member_client_path, class: "nav-link"
+- elsif current_user.present? && current_user.inventory?
+  %li.nav-item.dropdown
+    = link_to 'Inventory' , inventory_index_path, class: "nav-link"
+- elsif current_user.present? && current_user.human_resources?
+  %li.nav-item.dropdown
+    = link_to 'HR' , hr_index_path, class: "nav-link"
