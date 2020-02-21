@@ -2,7 +2,7 @@ class User < ApplicationRecord
   enum role: %i[user auditor inventory human_resource]
   after_initialize :set_default_role, :set_default_description, :set_default_image, if: :new_record?
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable, :omniauthable, omniauth_providers: %i[facebook]
+         :recoverable, :rememberable, :validatable, :omniauthable, omniauth_providers: %i[facebook google_oauth2]
 
   def self.new_with_session(params, session)
     super.tap do |user|
